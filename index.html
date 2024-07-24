@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Contacto</title>
+    <style>
+        /* Estilos básicos para el formulario */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        label, input, textarea {
+            display: block;
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Formulario de Contacto</h1>
+    <form id="contact-form">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" pattern="[A-Za-z]{1,30}" required>
+
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido" name="apellido" pattern="[A-Za-z]{1,30}" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="fecha-nacimiento">Fecha de Nacimiento:</label>
+        <input type="date" id="fecha-nacimiento" name="fecha-nacimiento" max="2003-12-31" required>
+
+        <label for="pais">País de Residencia:</label>
+        <select id="pais" name="pais" required>
+            <option value="Argentina">Argentina</option>
+            <option value="Bolivia">Bolivia</option>
+            <option value="Brasil">Brasil</option>
+            <option value="Canada">Canada</option>
+            <option value="Chile">Chile</option>
+            <option value="Colombia">Colombia</option>
+            <option value="Costa Rica">Costa Rica</option>
+            <option value="Ecuador">Ecuador</option>
+            <option value="El Salvador">El Salvador</option>
+            <option value="Estados Unidos">Estados Unidos</option>
+            <option value="Guatemala">Guatemala</option>
+            <option value="Honduras">Honduras</option>
+            <option value="Mexico">Mexico</option>
+            <option value="Nicaragua">Nicaragua</option>
+            <option value="Panama">Panama</option>
+            <option value="Paraguay">Paraguay</option>
+            <option value="Peru">Peru</option>
+            <option value="Uruguay">Uruguay</option>
+            <option value="Venezuela">Venezuela</option>
+            <option value="España">España</option>
+            <option value="Otro">Otro</option>
+            <!-- Agrega más opciones aquí -->
+        </select>
+
+        <label for="mensaje">Mensaje:</label>
+        <textarea id="mensaje" name="mensaje" rows="4" maxlength="250" required></textarea>
+
+        <button type="submit">Enviar</button>
+    </form>
+
+    <div id="success-message" style="display: none; color: rgb(24, 200, 27);">
+        ¡Formulario enviado exitosamente! Gracias por contactarnos.
+    </div>
+
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', function (event) {
+            event.preventDefault(); // Evita que se envíe el formulario automáticamente
+
+            const nombre = document.getElementById('nombre').value;
+            const apellido = document.getElementById('apellido').value;
+            const email = document.getElementById('email').value;
+            const fechaNacimiento = document.getElementById('fecha-nacimiento').value;
+            const pais = document.getElementById('pais').value;
+            const mensaje = document.getElementById('mensaje').value;
+
+            // Validación personalizada para el campo de Email
+            const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            if (!isValidEmail) {
+                alert('Ingresa un email válido.');
+                return;
+            }
+
+            // Validación de fecha de nacimiento (máximo 100 años atrás)
+            const fechaActual = new Date();
+            const fechaNacimientoDate = new Date(fechaNacimiento);
+            const edad = fechaActual.getFullYear() - fechaNacimientoDate.getFullYear();
+            if (edad > 100) {
+                alert('La fecha de nacimiento no puede ser mayor a 100 años atrás.');
+                return;
+            }
+
+            // Aquí puedes enviar los datos a tu servidor o realizar otras acciones
+            console.log('Datos enviados:', { nombre, apellido, email, fechaNacimiento, pais, mensaje });
+
+            // Mostrar mensaje de éxito
+            document.getElementById('success-message').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
